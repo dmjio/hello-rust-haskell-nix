@@ -1,5 +1,5 @@
-hello-rust
-#####################
+hello-rust-haskell-nix
+======================
 
 An example of statically compiling a `rust` library callable via `haskell`, using `nix`.
 
