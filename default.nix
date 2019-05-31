@@ -21,7 +21,7 @@ rustPlatform.buildRustPackage rec {
   cargoBuildFlags = [];
 
   nativeBuildInputs = [ asciidoc asciidoctor plantuml docbook_xsl libxslt ];
-  buildInputs = [ rustfmt ]
+  buildInputs = [ cargo rustfmt ]
     ++ (stdenv.lib.optional stdenv.isDarwin darwin.apple_sdk.frameworks.Security);
 
   preFixup = ''
@@ -29,7 +29,7 @@ rustPlatform.buildRustPackage rec {
 
   meta = with stdenv.lib; {
     description = "Hello, world!";
-    homepage = https://github.com/jwiegley/hello;
+    homepage = https://github.com/jwiegley/hello-rust;
     license = with licenses; [ mit ];
     maintainers = [ maintainers.jwiegley ];
     platforms = platforms.all;
