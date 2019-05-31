@@ -5,6 +5,13 @@
              inherit sha256; }) {
              config.allowUnfree = true;
              config.allowBroken = true;
+             config.packageOverrides = pkgs: rec {
+               rls = pkgs.rls.overrideDerivation (attrs: {
+                 buildInputs = attrs.buildInputs ++
+                   (pkgs.stdenv.lib.optional pkgs.stdenv.isDarwin
+                      pkgs.darwin.apple_sdk.frameworks.Security);
+               });
+             };
            }
 , mkDerivation ? null
 }:
@@ -21,7 +28,7 @@ rustPlatform.buildRustPackage rec {
   cargoBuildFlags = [];
 
   nativeBuildInputs = [ asciidoc asciidoctor plantuml docbook_xsl libxslt ];
-  buildInputs = [ cargo rustfmt ]
+  buildInputs = [ cargo rustfmt rls ]
     ++ (stdenv.lib.optional stdenv.isDarwin darwin.apple_sdk.frameworks.Security);
 
   preFixup = ''
